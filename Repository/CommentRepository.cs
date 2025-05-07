@@ -19,7 +19,7 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<Comment> CreateAsync( Comment comment)
+        public async Task<Comment> CreateAsync(Comment comment)
         {
             await _context.Comment.AddAsync(comment);
             await _context.SaveChangesAsync();
@@ -39,6 +39,26 @@ namespace api.Repository
                 return null;
             }
             return comment;
+        }
+
+        public async Task<Comment?> UpdateCommentAsync(int id, Comment comment)
+        {
+            var commentUpdate = await _context.Comment.FirstOrDefaultAsync(x => x.Id == id);
+            if (comment == null)
+            {
+                return null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(comment.Title) && comment.Title != "string")
+            {
+                commentUpdate.Title = comment.Title;
+            }
+            if (!string.IsNullOrWhiteSpace(comment.Title) && comment.Title != "string")
+            {
+                commentUpdate.Content = comment.Content;
+            }
+            await _context.SaveChangesAsync();
+            return commentUpdate;
         }
     }
 }

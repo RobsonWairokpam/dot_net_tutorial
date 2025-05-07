@@ -6,6 +6,7 @@ using api.Data;
 using api.Dtos.Comment;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controller
@@ -61,6 +62,7 @@ namespace api.Controller
 
         // }
 
+
         [HttpPost]
         [Route("{stockId}")]
         public async Task<IActionResult> CreateComment(
@@ -77,5 +79,19 @@ namespace api.Controller
             await _commentRepo.CreateAsync(comment);
             return CreatedAtAction(nameof(GetById), new { id = comment }, comment.ToCommentDto());
         }
+
+        
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateComment([FromRoute] int id,[FromBody] UpdateCommentDto updateComment)
+        {
+            var comment = await _commentRepo.UpdateCommentAsync(id, updateComment.ToCommentUpdateDto());
+            if (comment == null)
+            {
+                return NotFound("Comment not Found");
+            }
+            return Ok(comment.ToCommentDto());
+        }
+        
     }
 }
