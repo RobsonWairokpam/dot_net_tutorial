@@ -172,3 +172,5 @@ G:\Project\dotNetVsCode\api\obj\Debug\net8.0\refint\api.dll
 G:\Project\dotNetVsCode\api\obj\Debug\net8.0\api.pdb
 G:\Project\dotNetVsCode\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 G:\Project\dotNetVsCode\api\obj\Debug\net8.0\ref\api.dll
+G:\Project\dotNetVsCode\api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\Project\dotNetVsCode\api\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
