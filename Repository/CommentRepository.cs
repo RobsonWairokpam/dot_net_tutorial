@@ -28,12 +28,12 @@ namespace api.Repository
 
         public async Task<Comment?> DeleteCommentAsync(int id)
         {
-              var comment = await _context.Comment.FirstOrDefaultAsync(x => x.Id == id);
+            var comment = await _context.Comment.FirstOrDefaultAsync(x => x.Id == id);
             if (comment == null)
             {
                 return null;
             }
-            _context.Comment.Remove( comment);
+            _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
             return comment;
         }
