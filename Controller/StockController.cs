@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Stocks;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -26,12 +27,12 @@ namespace api.Controller
 
         [HttpGet]
         // public IActionResult GetAll()
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             // var stocks = _context.Stock.ToList()
             // .Select(s => s.ToStockDtos());
             // var stocks = await _context.Stock.ToListAsync();
-            var stocks = await _stockRepo.GetAllAsync();
+            var stocks = await _stockRepo.GetAllAsync(query);
             var stockDto = stocks.Select(s => s.ToStockDtos());
 
             return Ok(stocks);
@@ -78,51 +79,11 @@ namespace api.Controller
             [FromBody] UpdateStockDto updatestockDto
         )
         {
-            // var stockModel = _context.Stock.FirstOrDefault(x => x.Id == id);
-            // var stockModel = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
             var stockModel = await _stockRepo.UpdateAsync(id, updatestockDto);
             if (stockModel == null)
             {
                 return NotFound();
             }
-
-            // if (
-            //     !string.IsNullOrWhiteSpace(updatestockDto.Symbol)
-            //     && updatestockDto.Symbol != "string"
-            // )
-            // {
-            //     stockModel.Symbol = updatestockDto.Symbol;
-            // }
-            // if (
-            //     !string.IsNullOrWhiteSpace(updatestockDto.CompanyName)
-            //     && updatestockDto.CompanyName != "string"
-            // )
-            // {
-            //     stockModel.CompanyName = updatestockDto.CompanyName;
-            // }
-            // if (updatestockDto.Purchase != 0)
-            // {
-            //     stockModel.Purchase = updatestockDto.Purchase;
-            // }
-            // if (updatestockDto.LastDiv != 0)
-            // {
-            //     stockModel.LastDiv = updatestockDto.LastDiv;
-            // }
-            // if (
-            //     !string.IsNullOrWhiteSpace(updatestockDto.Industry)
-            //     && updatestockDto.Industry != "string"
-            // )
-            // {
-            //     stockModel.Industry = updatestockDto.Industry;
-            // }
-            // if (updatestockDto.MarketCap != 0)
-            // {
-            //     stockModel.MarketCap = updatestockDto.MarketCap;
-            // }
-
-            // _context.SaveChanges();
-            // await _context.SaveChangesAsync();
-
             return Ok(stockModel.ToStockDtos());
         }
 

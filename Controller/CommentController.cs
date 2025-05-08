@@ -79,7 +79,11 @@ namespace api.Controller
             }
             var comment = commentDto.ToCommentCreateDto(stockId);
             await _commentRepo.CreateAsync(comment);
-            return CreatedAtAction(nameof(GetById), new { id = comment.Id }, comment.ToCommentDto());
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = comment.Id },
+                comment.ToCommentDto()
+            );
         }
 
         [HttpPut]
