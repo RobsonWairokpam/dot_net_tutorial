@@ -62,7 +62,6 @@ namespace api.Controller
 
         // }
 
-
         [HttpPost]
         [Route("{stockId}")]
         public async Task<IActionResult> CreateComment(
@@ -80,18 +79,38 @@ namespace api.Controller
             return CreatedAtAction(nameof(GetById), new { id = comment }, comment.ToCommentDto());
         }
 
-        
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateComment([FromRoute] int id,[FromBody] UpdateCommentDto updateComment)
+        public async Task<IActionResult> UpdateComment(
+            [FromRoute] int id,
+            [FromBody] UpdateCommentDto updateComment
+        )
         {
-            var comment = await _commentRepo.UpdateCommentAsync(id, updateComment.ToCommentUpdateDto());
+            var comment = await _commentRepo.UpdateCommentAsync(
+                id,
+                updateComment.ToCommentUpdateDto()
+            );
             if (comment == null)
             {
                 return NotFound("Comment not Found");
             }
             return Ok(comment.ToCommentDto());
         }
-        
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            // var stockModel = await _context.Stock.FirstOrDefaultAsync(x => x.Id == id);
+            var comment = await _commentRepo.DeleteCommentAsync(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            // _context.Stock.Remove(stockModel);
+            // await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
